@@ -31,7 +31,7 @@ export default {
 
   <main>
     <section>
-      <div class="container py-5">
+      <div class="container pt-5">
         <div class="row">
           <div v-for="project in currentPageProjects" class="col-4 p-3">
             <ProjectCard :item="project"></ProjectCard>
@@ -40,9 +40,21 @@ export default {
       </div>
 
       <div class="container">
-        <div class="row">
+        <div class="row py-3 justify-content-center align-items-center">
+          <div class="col-auto">
+            <font-awesome-icon class="fs-5" :icon="['fas', 'angles-left']" />
+          </div>
+          <div class="col-auto">
+            <font-awesome-icon class="fs-5" :icon="['fas', 'angle-left']" />
+          </div>
           <div class="col-auto">
             <span class="fs-4">1</span>
+          </div>
+          <div class="col-auto">
+            <font-awesome-icon class="fs-5" :icon="['fas', 'angle-right']" />
+          </div>
+          <div class="col-auto">
+            <font-awesome-icon class="fs-5" :icon="['fas', 'angles-right']" />
           </div>
         </div>
       </div>
