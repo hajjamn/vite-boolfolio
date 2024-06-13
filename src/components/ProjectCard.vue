@@ -48,10 +48,11 @@ export default {
     <div class="card-footer">
       <div class="row">
         <div class="col-auto">
-          <span>{{ item.type_id }}</span>
+          <span>{{ item.type.name }}</span>
         </div>
         <div class="col-auto">
-          <span>Technologies placeholder</span>
+          <span v-for="technology in item.technologies" :class="`bg-${technology.name}`" class="badge me-1">{{
+            technology.name }}</span>
         </div>
       </div>
     </div>
@@ -83,6 +84,29 @@ export default {
 
 .my-active {
   opacity: 1;
+}
 
+.bg-vue {
+  background-color: #41B883;
+}
+
+.bg-css {
+  background-color: #563D7C;
+}
+
+.bg-js {
+  background-color: #F1E05A;
+}
+
+.bg-php {
+  background-color: #4F5D95;
+}
+
+.bg-laravel {
+  background-color: #F7523F;
+}
+
+.bg-sql {
+  background-color: #6d3f3f;
 }
 </style>
