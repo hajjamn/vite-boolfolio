@@ -8,20 +8,27 @@ export default {
   },
   data() {
     return {
-      currentPageProjects: []
+      currentPageProjects: [],
+      currentPage: 1,
+      lastPage: null,
     }
   },
   methods: {
-    fetchProject() {
-      axios.get('http://127.0.0.1:8000/api/projects')
+    fetchProjects(n) {
+      axios.get('http://127.0.0.1:8000/api/projects', {
+        params: {
+          page: n
+        }
+      })
         .then((response) => {
-          console.log(response.data.results.data)
           this.currentPageProjects = response.data.results.data
+          this.currentPage = response.data.results.current_page
+          this.lastPage = response.data.results.last_page
         })
     }
   },
   created() {
-    this.fetchProject()
+    this.fetchProjects(1)
   }
 }
 
@@ -39,22 +46,28 @@ export default {
         </div>
       </div>
 
-      <div class="container">
+      <div class="btn btn-secondary" @click="console.log(currentPage)">Test</div>
+
+      <div class="container nav-menu">
         <div class="row py-3 justify-content-center align-items-baseline">
           <div class="col-auto">
-            <font-awesome-icon class="fs-5" :icon="['fas', 'angles-left']" />
+            <font-awesome-icon :class="currentPage === 1 ? 'nav-btn-disabled' : ''" class="fs-5 nav-btn"
+              :icon="['fas', 'angles-left']" @click="fetchProjects(1)" />
+          </div>
+          <div class="col-auto" @click="">
+            <font-awesome-icon :class="currentPage - 1 <= 0 ? 'nav-btn-disabled' : ''" class="fs-5 nav-btn"
+              :icon="['fas', 'angle-left']" @click="fetchProjects(currentPage - 1)" />
           </div>
           <div class="col-auto">
-            <font-awesome-icon class="fs-5" :icon="['fas', 'angle-left']" />
+            <span class="fs-4">{{ currentPage }}</span>
           </div>
           <div class="col-auto">
-            <span class="fs-4">1</span>
+            <font-awesome-icon :class="currentPage + 1 > lastPage ? 'nav-btn-disabled' : ''" class="fs-5 nav-btn"
+              :icon="['fas', 'angle-right']" @click="fetchProjects(currentPage + 1)" />
           </div>
           <div class="col-auto">
-            <font-awesome-icon class="fs-5" :icon="['fas', 'angle-right']" />
-          </div>
-          <div class="col-auto">
-            <font-awesome-icon class="fs-5" :icon="['fas', 'angles-right']" />
+            <font-awesome-icon :class="currentPage + 2 > lastPage ? 'nav-btn-disabled' : ''" class="fs-5 nav-btn"
+              :icon="['fas', 'angles-right']" @click="fetchProjects(lastPage)" />
           </div>
         </div>
       </div>
@@ -64,4 +77,23 @@ export default {
 
 </template>
 
-<style></style>
+<style scoped>
+.nav-btn {
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  color: rgb(84, 177, 231);
+}
+
+.nav-btn-disabled {
+  cursor: default;
+  color: lightgrey;
+  pointer-events: none;
+}
+
+.nav-menu a {
+  color: currentColor;
+  text-decoration: none;
+}
+</style>
