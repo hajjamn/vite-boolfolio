@@ -30,9 +30,9 @@ export default {
 <template>
 
   <main>
-    <section>
-      <div class="container pt-5">
-        <div class="row">
+    <section class="d-flex flex-column justify-content-between align-items-center h-100">
+      <div class="container pt-5 flex-grow-1">
+        <div class="row h-100">
           <div v-for="project in currentPageProjects" class="col-4 p-3">
             <ProjectCard :item="project"></ProjectCard>
           </div>
@@ -40,7 +40,7 @@ export default {
       </div>
 
       <div class="container">
-        <div class="row py-3 justify-content-center align-items-center">
+        <div class="row py-3 justify-content-center align-items-baseline">
           <div class="col-auto">
             <font-awesome-icon class="fs-5" :icon="['fas', 'angles-left']" />
           </div>
